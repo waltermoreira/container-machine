@@ -41,3 +41,5 @@ RUN systemctl disable \
       networkd-dispatcher.service
 
 RUN sed -i -e 's/^AcceptEnv LANG LC_\*$/#AcceptEnv LANG LC_*/' /etc/ssh/sshd_config
+
+COPY create-user.sh flake.nix flake.lock home-manager.sh /etc/machine/
