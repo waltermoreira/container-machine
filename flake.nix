@@ -78,6 +78,27 @@
                         }
                 }
               '';
+              programs.git = {
+                enable = true;
+                package = pkgs.gitFull;
+                settings = {
+                  user.name = "Walter Moreira";
+                  user.email = "wmoreira@tacc.utexas.edu";
+                  alias = {
+                    co = "checkout";
+                    ci = "commit";
+                    st = "status";
+                    gl = "log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
+                  };
+                  color = {
+                    diff = "auto";
+                    status = "auto";
+                    branch = "auto";
+                  };
+                  push.default = "simple";
+                  init.defaultBranch = "main";
+                };
+              };
             })
           ];
         };
