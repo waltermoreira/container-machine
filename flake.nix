@@ -31,6 +31,14 @@
           home.packages = with pkgs; [
             hello
             podman
+            podman-compose
+            postgresql
+            rustup
+            file
+            vim
+            pkg-config
+            openssl
+            shadow
           ];
         };
 
@@ -39,13 +47,24 @@
           pkgs = import nixpkgs { system = "aarch64-linux"; };
           modules = [
             inputs.self.homeModules.bash
-            ({ config, ... }: {
+            ({ pkgs, lib, config, ... }: {
               home.username = "wmoreira";
               home.homeDirectory = "/home/wmoreira";
               home.stateVersion = "25.11";
               home.sessionVariables = {
                 USER = config.home.username;
                 PATH = "${config.home.homeDirectory}/.nix-profile/bin:$PATH";
+              };
+              home.activation = {
+                addSubUid = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+                  run /usr/bin/sudo ${pkgs.shadow}/bin/usermod \
+                    --add-subuids 100000-165535 --add-subgids 100000-165535 \
+                    ${config.home.username}
+                '';
+                rustActivation = lib.hm.dag.entryAfter [ "writeBoundary"] ''
+                  run ${pkgs.rustup}/bin/rustup default stable \
+                    && ${pkgs.rustup}/bin/rustup component add rust-src
+                '';
               };
               home.file.".config/containers/registries.conf".text = ''
                 # Specify registries to search when pulling unqualified images
