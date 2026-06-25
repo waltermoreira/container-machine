@@ -47,9 +47,10 @@
           pkgs = import nixpkgs { system = "aarch64-linux"; };
           modules = [
             inputs.self.homeModules.bash
+            ./user.nix
             ({ pkgs, lib, config, ... }: {
-              home.username = "wmoreira";
-              home.homeDirectory = "/home/wmoreira";
+              home.username = config.my.username;
+              home.homeDirectory = config.my.home;
               home.stateVersion = "25.11";
               home.sessionVariables = {
                 USER = config.home.username;
@@ -61,7 +62,7 @@
                     --add-subuids 100000-165535 --add-subgids 100000-165535 \
                     ${config.home.username}
                 '';
-                rustActivation = lib.hm.dag.entryAfter [ "writeBoundary"] ''
+                rustActivation = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
                   run ${pkgs.rustup}/bin/rustup default stable \
                     && ${pkgs.rustup}/bin/rustup component add rust-src
                 '';
@@ -101,8 +102,8 @@
                 enable = true;
                 package = pkgs.gitFull;
                 settings = {
-                  user.name = "Walter Moreira";
-                  user.email = "wmoreira@tacc.utexas.edu";
+                  user.name = config.my.name;
+                  user.email = config.my.email;
                   alias = {
                     co = "checkout";
                     ci = "commit";
