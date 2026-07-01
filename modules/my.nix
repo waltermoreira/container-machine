@@ -21,5 +21,10 @@
       default = "/home/johnsmith";
       description = "Home directory ($HOME)";
     };
+    my.machineName = lib.mkOption {
+      type = lib.types.str;
+      default = "ubuntu";
+      description = "Machine name";
+    };
   };
 }

@@ -1,13 +1,12 @@
 { lib, config, ... }:
 {
+  imports = [
+    ./my.nix
+  ];
   options = {
     imageName = lib.mkOption {
       type = lib.types.str;
       default = "local/ubuntu-machine:latest";
-    };
-    machineName = lib.mkOption {
-      type = lib.types.str;
-      default = "ubuntu";
     };
   };
   config = {
@@ -23,13 +22,20 @@
         create = pkgs.writeShellApplication {
           name = "create-machine";
           text = ''
-            container machine create ${config.imageName} --name ${config.machineName}
+            container machine create ${config.imageName} --name ${config.my.machineName}
           '';
+        };
+        full = pkgs.symlinkJoin {
+          name = "machine";
+          paths = [
+            build
+            create
+          ];
         };
       in
       {
         packages = {
-          inherit build create;
+          inherit build create full;
         };
       };
   };
