@@ -35,6 +35,7 @@
       in
       {
         packages = {
+          default = full;
           inherit build create full;
         };
       };
