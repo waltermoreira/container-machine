@@ -39,6 +39,7 @@
             pkg-config
             openssl
             shadow
+            lsof
           ];
         };
 
