@@ -40,22 +40,22 @@
             [engine]
             cgroup_manager="cgroupfs"
           '';
-          home.file.".config/containers/policy.json".text = ''
-            {
-                "default": [
-                    {
-                        "type": "insecureAcceptAnything"
-                    }
-                ],
-                "transports":
-                    {
-                        "docker-daemon":
-                            {
-                                "": [{"type":"insecureAcceptAnything"}]
-                            }
-                    }
-            }
-          '';
+          # home.file.".config/containers/policy.json".text = ''
+          #   {
+          #       "default": [
+          #           {
+          #               "type": "insecureAcceptAnything"
+          #           }
+          #       ],
+          #       "transports":
+          #           {
+          #               "docker-daemon":
+          #                   {
+          #                       "": [{"type":"insecureAcceptAnything"}]
+          #                   }
+          #           }
+          #   }
+          # '';
           programs.git = {
             enable = true;
             package = pkgs.gitFull;
