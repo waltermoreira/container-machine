@@ -33,3 +33,5 @@ echo "experimental-features = nix-command flakes" >> /etc/nix/nix.conf
 
 cd /etc/machine
 env HOME="${CONTAINER_HOME}" su "${CONTAINER_USER}" -c "./home-manager.sh" >> /tmp/logs 2>&1
+
+usermod -aG docker "${CONTAINER_USER}" >> /tmp/logs 2>&1

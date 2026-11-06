@@ -14,6 +14,14 @@
             USER = config.home.username;
             PATH = "${config.home.homeDirectory}/.nix-profile/bin:$PATH";
           };
+          home.shellAliases =
+            let
+              kubectl = "minikube kubectl --";
+            in
+            {
+              inherit kubectl;
+              k = kubectl;
+            };
           home.activation = {
             addSubUid = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
               run /usr/bin/sudo ${pkgs.shadow}/bin/usermod \

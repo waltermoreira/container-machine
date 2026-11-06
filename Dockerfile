@@ -42,4 +42,7 @@ RUN systemctl disable \
 
 RUN sed -i -e 's/^AcceptEnv LANG LC_\*$/#AcceptEnv LANG LC_*/' /etc/ssh/sshd_config
 
+RUN curl -LO https://github.com/kubernetes/minikube/releases/latest/download/minikube-linux-arm64 && \
+    install minikube-linux-arm64 /usr/local/bin/minikube && rm minikube-linux-arm64
+
 COPY . /etc/machine/
